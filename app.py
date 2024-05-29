@@ -12,11 +12,15 @@ def upland_webhook():
     data = request.json
     logger.info(f"Recebido do Upland: {data}")
 
-    code = data['data']['code']
-    user_id = data['data']['userId']
-    access_token = data['data']['accessToken']
-
-    logger.info(f"Código: {code}, UserID: {user_id}, AccessToken: {access_token}")
+    # Verifica se a chave 'data' está no payload
+    if 'data' in data:
+        code = data['data'].get('code', 'N/A')
+        user_id = data['data'].get('userId', 'N/A')
+        access_token = data['data'].get('accessToken', 'N/A')
+        
+        logger.info(f"Código: {code}, UserID: {user_id}, AccessToken: {access_token}")
+    else:
+        logger.warning("Chave 'data' ausente no payload recebido")
 
     return jsonify({"status": "success"})
 

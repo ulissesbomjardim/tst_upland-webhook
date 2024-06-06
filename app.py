@@ -66,6 +66,7 @@ def upland_webhook():
         user_id = data['data'].get('userId', 'N/A')
         access_token = data['data'].get('accessToken', 'N/A')
         app_id = data['data'].get('appId', 'N/A')
+        code = data['data'].get('code', 'N/A')
 
         logger.info(f"Código: {upltoken}, UserID: {user_id}, AccessToken: {access_token}, AppID: {app_id}")
 
@@ -73,7 +74,8 @@ def upland_webhook():
         new_authentication_info = {
             'accessToken': access_token,
             'appId': app_id,
-            'userId': user_id
+            'userId': user_id,
+            'code': code
         }
 
         # Atualiza o usuário no Firebase

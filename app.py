@@ -55,10 +55,17 @@ def update_user_authentication(upltoken, new_authentication_info):
 
 app = Flask(__name__)
 
+# Rota para validação do webhook
 @app.route('/upland-webhook', methods=['POST'])
 def upland_webhook():
     data = request.json
     logger.info(f"Recebido do Upland: {data}")
+
+    # Verifica se é uma chamada de validação
+    if data and 'message' in data:
+        if data['message'] == "Upland services validation call":
+            logger.info("Validação de webhook recebida.")
+            return jsonify({"status": "success", "message": "Webhook validado com sucesso."}), 200
 
     # Verifica se a chave 'data' está no payload
     if 'data' in data:
